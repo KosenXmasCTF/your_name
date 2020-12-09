@@ -1,4 +1,7 @@
-# [Web] 名前無きサーバ / The Server without a Name
+# 名前無きサーバ / The Server without a Name
+![Genre: Web](https://img.shields.io/badge/genre-web-brightgreen?style=for-the-badge)
+![Author: siketyan](https://img.shields.io/badge/author-siketyan-lightgrey?style=for-the-badge)
+
 昔々あるところに，ひとりのサーバがいた．
 そのサーバは一切の名を名乗らなかった．
 人々は彼を「のなめ」と呼んだが，彼が心を開くことはなかった．
