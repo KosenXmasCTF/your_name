@@ -1,5 +1,6 @@
 # your_name
 ![Genre: Web](https://img.shields.io/badge/genre-web-brightgreen?style=for-the-badge)
+![Difficulty: Easy](https://img.shields.io/badge/difficulty-Easy-blue?style=for-the-badge)
 ![Author: siketyan](https://img.shields.io/badge/author-siketyan-lightgrey?style=for-the-badge)
 
 昔々あるところに，ひとりのサーバがいた．
