@@ -8,5 +8,6 @@
 彼が残した設定ファイルを基に隠されたサーバを見つけ出そう．
 
 ## Files
-- hidden/nginx.hidden.conf
+- hidden/nginx.conf
+- Dockerfile
 - docker-compose.yml
