@@ -31,7 +31,7 @@ TLS での接続は暗号化されているため，直接通信するサーバ�
 OpenSSL クライアントを使って SNI を明示的に指定してリクエストしてみます．
 
 ```console
-$ echo -e "GET /flag.txt HTTP/1.1\nHost: hidden.your-name.xm4s.net\n\n" | openssl s_client -connect localhost:443 -servername hidden.your-name.xm4s.net -quiet -crlf
+$ echo -e "GET /flag.txt HTTP/1.1\nHost: hidden.your-name.xm4s.net\n\n" | openssl s_client -connect your-name.xm4s.net:443 -servername hidden.your-name.xm4s.net -quiet -crlf
 # 省略
 xm4s{...}
 ```
