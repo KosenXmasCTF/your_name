@@ -4,17 +4,17 @@ services:
   hidden:
     image: 'nginx:alpine'
     volumes:
-      - './nginx.hidden.conf:/etc/nginx/nginx.conf'
-      - './cert.hidden.pem:/etc/nginx/cert.pem'
-      - './privkey.hidden.pem:/etc/nginx/privkey.pem'
+      - './hidden/nginx.hidden.conf:/etc/nginx/nginx.conf'
+      - './hidden/cert.hidden.pem:/etc/nginx/cert.pem'
+      - './hidden/privkey.hidden.pem:/etc/nginx/privkey.pem'
       - './flag.txt:/var/www/html/flag.txt'
   
   frontend:
     image: 'nginx:alpine'
     volumes:
-      - './nginx.frontend.conf:/etc/nginx/nginx.conf'
-      - './cert.frontend.pem:/etc/nginx/cert.pem'
-      - './privkey.frontend.pem:/etc/nginx/privkey.pem'
+      - './frontend/nginx.frontend.conf:/etc/nginx/nginx.conf'
+      - './frontend/cert.frontend.pem:/etc/nginx/cert.pem'
+      - './frontend/privkey.frontend.pem:/etc/nginx/privkey.pem'
     ports:
       - '443:443'
     depends_on:
