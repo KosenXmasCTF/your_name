@@ -2,19 +2,20 @@ version: '3'
 
 services:
   hidden:
-    image: 'nginx:alpine'
-    volumes:
-      - './hidden/nginx.hidden.conf:/etc/nginx/nginx.conf'
-      - './hidden/cert.hidden.pem:/etc/nginx/cert.pem'
-      - './hidden/privkey.hidden.pem:/etc/nginx/privkey.pem'
-      - './flag.txt:/var/www/html/flag.txt'
+    build:
+      args: 
+        FLAG: '${FLAG}'
+      context: ./hidden
+      dockerfile: ../Dockerfile
+    image: '${IMAGE_NAME_HIDDEN}'
   
   frontend:
-    image: 'nginx:alpine'
-    volumes:
-      - './frontend/nginx.frontend.conf:/etc/nginx/nginx.conf'
-      - './frontend/cert.frontend.pem:/etc/nginx/cert.pem'
-      - './frontend/privkey.frontend.pem:/etc/nginx/privkey.pem'
+    build:
+      args: 
+        FLAG: 'Nothing here!'
+      context: ./frontend
+      dockerfile: ../Dockerfile
+    image: '${IMAGE_NAME_FRONTEND}'
     ports:
       - '443:443'
     depends_on:

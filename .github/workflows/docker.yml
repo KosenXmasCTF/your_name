@@ -8,7 +8,9 @@ on:
       - v*
 
 env:
-  IMAGE_NAME: your_name
+  FLAG: ${{ secrets.FLAG }}
+  IMAGE_NAME_FRONTEND: your_name_frontend
+  IMAGE_NAME_HIDDEN: your_name_hidden
 
 jobs:
   push:
@@ -16,18 +18,36 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Copy certificates and private keys
+        env:
+          FRONTEND_CERT: |
+            ${{ secrets.FRONTEND_CERT }}
+          FRONTEND_PRIVKEY: |
+            ${{ secrets.FRONTEND_PRIVKEY }}
+          HIDDEN_CERT: |
+            ${{ secrets.HIDDEN_CERT }}
+          HIDDEN_PRIVKEY: |
+            ${{ secrets.HIDDEN_PRIVKEY }}
+        run: |
+          echo "$FRONTEND_CERT" > ./frontend/cert.pem
+          echo "$FRONTEND_PRIVKEY" > ./frontend/privkey.pem
+          echo "$HIDDEN_CERT" > ./hidden/cert.pem
+          echo "$HIDDEN_PRIVKEY" > ./hidden/privkey.pem
+
       - name: Build image
-        run: docker build --tag "$IMAGE_NAME" .
+        run: docker-compose build
 
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
       - name: Push image
         run: |
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+          IMAGE_ID_FRONTEND=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME_FRONTEND
+          IMAGE_ID_HIDDEN=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME_HIDDEN
 
           # Change all uppercase to lowercase
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          IMAGE_ID_FRONTEND=$(echo $IMAGE_ID_FRONTEND | tr '[A-Z]' '[a-z]')
+          IMAGE_ID_HIDDEN=$(echo $IMAGE_ID_HIDDEN | tr '[A-Z]' '[a-z]')
 
           # Strip git ref prefix from version
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
@@ -38,8 +58,11 @@ jobs:
           # Use Docker `latest` tag convention
           [ "$VERSION" == "master" ] && VERSION=latest
 
-          echo IMAGE_ID=$IMAGE_ID
+          echo IMAGE_ID_FRONTEND=$IMAGE_ID_FRONTEND
+          echo IMAGE_ID_HIDDEN=$IMAGE_ID_HIDDEN
           echo VERSION=$VERSION
 
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+          docker tag $IMAGE_NAME_FRONTEND $IMAGE_ID_FRONTEND:$VERSION
+          docker tag $IMAGE_NAME_HIDDEN $IMAGE_ID_HIDDEN:$VERSION
+          docker push $IMAGE_ID_FRONTEND:$VERSION
+          docker push $IMAGE_ID_HIDDEN:$VERSION
