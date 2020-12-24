@@ -1,10 +1,10 @@
 # Writeup
-彼が残した設定ファイルから，フラグは `https://hidden.your_name.xm4s.net/flag.txt` に隠されたことが推測できます．
+彼が残した設定ファイルから，フラグは `https://hidden.your-name.xm4s.net/flag.txt` に隠されたことが推測できます．
 しかし，以下のようにアクセスしてもアクセスできません．
 
 ```console
-$ curl https://hidden.your_name.xm4s.net/flag.txt
-curl: (6) Could not resolve host: hidden.your_name.xm4s.net
+$ curl https://hidden.your-name.xm4s.net/flag.txt
+curl: (6) Could not resolve host: hidden.your-name.xm4s.net
 ```
 
 隠されたサーバは， DNS で名前解決を行うことができないようです．
@@ -17,7 +17,7 @@ curl: (6) Could not resolve host: hidden.your_name.xm4s.net
 そこで，以下のようにアクセスを試みます．
 
 ```console
-$ curl https://your_name.xm4s.net/flag.txt -H 'Host: hidden.your-name.xm4s.net'
+$ curl https://your-name.xm4s.net/flag.txt -H 'Host: hidden.your-name.xm4s.net'
 Nothing here!
 ```
 
